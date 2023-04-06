@@ -1,6 +1,6 @@
-/* body{
+body{
     background-color: black;
-} */
+}
 .cntdiv {
     background-color: white;
     height:calc(100%+50px);
@@ -23,20 +23,27 @@
 }
 .edits {
     display: none;
-    margin-left: 80% !important;
+    /* margin-top: 25%;
+    justify-content: flex-end; */
 }
 .card:hover .edits {
-    display: block;
-    /* justify-content: space-evenly;
-    flex-wrap: wrap; */
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+.edits button {
+    text-align: center;
+    flex:1;
 }
 .tedit,.cedit {
     border: none;
     outline: none;
-    display: none;
+    width: 100%;
 }
 .epro{
-    display: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
 }
 .fl {
     display: flex;
@@ -45,12 +52,20 @@
 }
 .pop {
     display: none;
-    width: 100vw;
-    height: 100vh;
+    position: absolute;
+    top:25%;
+    background-color: white;
+    width: 50%;
+    border-radius: 20px;
+    padding: 0 20px;
+    margin-left: 25%;
 }
 @media only screen and (max-width: 600px) {
     .addbtn {
         margin-left: 8rem;
+    }
+    .notes{
+        margin: 0;
     }
 }
 

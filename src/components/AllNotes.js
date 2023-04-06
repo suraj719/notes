@@ -1,42 +1,36 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
+import swal from 'sweetalert';
 import { removeNote, updateNote } from '../redux/action';
-// import { useNavigate } from 'react-router-dom';
 import './notes.css'
 export default function AllNotes() {
-
+  const titleref= useRef(null)
+  const contref = useRef(null)
+  let [id,setId] = useState()
   const notes = useSelector((state) => state.notes)
-  console.log(notes)
   const dispatch = useDispatch();
-  // const navigate = useNavigate()
   let [newtitle,setNewtitle] = useState('')
   let [newcontent,setNewcontent] = useState('')
-  let [title,setTitle]= useState('')
-  let [content,setContent] = useState('')
-  let [index,setIndex] = useState()
   function update(id,title,content) {
-    // document.querySelector('.ot').style.display="none"
-    // document.querySelector('.oc').style.display="none"
-    // document.querySelector('.tedit').style.display="block"
-    // document.querySelector('.cedit').style.display="block"
-    // document.querySelector('.epro').style.display="flex"
-    // document.querySelector('.epro').classList.toggle('.fl')
-    // document.querySelector('.card').innerHTML=
-    // `
-    // <input type="text" defaultValue={data.title} onChange = {(e)=> setNewtitle(e.target.value)} ></input>
-    //     <input type="text" defaultValue={data.content} onChange = {(e)=> setNewcontent(e.target.value)} ></input>
-    // `
-    
-    document.querySelector('.notes').style.display="none"
-    document.querySelector('.pop').style.display="flex"
-    
+    titleref.current.value=title
+    contref.current.value=content
+    setId(id)
+    setNewtitle(title)
+    setNewcontent(content)
+    document.querySelector('.notes').style.opacity="0.5"
+    document.querySelector('.pop').style.display="block"
 
   }
-  function savedit(id,title,content) {
-      dispatch(updateNote(id,title,content,newtitle,newcontent))
-    alert("done updating");
-    document.querySelector('.epro').style.display="none"
+  function saveit(id,title,content) {
+    dispatch(updateNote(id,title,content,newtitle,newcontent))
+    // alert("done updating");
+    document.querySelector('.notes').style.opacity="1"
+    document.querySelector('.pop').style.display="none"
+  }
+  function cancel() {
+    document.querySelector('.notes').style.opacity="1"
+    document.querySelector('.pop').style.display="none"
   }
   return (
     <>
@@ -47,61 +41,50 @@ export default function AllNotes() {
           <button className='btn btn-outline-info'><i className="fa-solid fa-arrow-left"></i>  Go Home</button>
         </Link>
      </div>
-     <div className='notes mt-2'>
+     {
+      notes.length===0?<h1 className='text-center text-danger mt-2'>No Notes Found</h1>:""
+     }
+     <div className='notes mt-2 d-flex flex-wrap'>
       {
-        notes.map((note, index) => {
-          return (
-            <div key={index} className={index}>
-              <div className="card " style={{width: "18rem", margin:'2rem'}}>
-                <div className="card-body d-flex">
-                  
-                    <div>
-                      <h5 className="card-title ot">{note.title}</h5>
-                      {/* <input type="text" className='tedit' defaultValue={note.title} onChange = {(e)=> setNewtitle(e.target.value)} ></input> */}
-                      <hr />
-                      {/* <input type="text" className='cedit' defaultValue={note.content} onChange = {(e)=> setNewcontent(e.target.value)} ></input> */}
-                                        <p className="card-text oc">{note.content}</p>
-                    </div>
-                    
-                  {/* <hr /> */}
-                  <div className='edits'>
-                    <button className="btn btn-danger d-flex" onClick={()=> dispatch(removeNote(index))}>
-                      <lord-icon
-                        src="https://cdn.lordicon.com/jmkrnisz.json"
-                        trigger="hover"
-                        className='lic'
-                        style={{width:"22px",marginTop:"-4px"}} >
-                      </lord-icon>
-                    </button>
-                    {/* <Link to={`/edit/${index+1}`} state={{data:note,id:index}} key={index}> */}
-                        <button className='btn btn-success' onClick={()=>update(index,note.title,note.content)}>
-                          <i className="fa-solid fa-pen-to-square"></i>
-                        </button>
-                    {/* </Link> */}
+           notes.map((note, index) => {
+            return (
+              <div key={index} className={index}>
+                <div className="card d-flex flex-wrap" style={{width: "18rem",margin:'2rem'}}>
+                  <div className="card-body ">
+                      <div className='' style={{width: "15rem",}}>
+                        <h5 className="card-title text-success ot">{note.title}</h5>
+                        <hr />
+                        <p className="card-text oc">{note.content}</p>
+                      </div>
                   </div>
+                  <div className='edits'>
+                      <button className="btn btn-danger"  onClick={()=>{ dispatch(removeNote(index));swal("deleted a task","","success")}}>Delete
+                        <i className="ms-2 fa-solid fa-trash"></i>
+                      </button>
+                          <button className='btn btn-success' onClick={()=>update(index,note.title,note.content)}>Edit  
+                             <i className="fa-solid ms-2 fa-pen-to-square"></i>
+                          </button>
+                    </div>
                 </div>
-                {/* <div className='epro'>
-                      <button className='btn btn-success' onClick={()=>savedit(index,note.title,note.content)}>save</button>
-                      <button className='btn btn-secondary'>cancel</button>
-                </div> */}
               </div>
-            </div>
-
-          )
-        })
+            )
+          }) 
       }
-
      </div>
-     <div className="pop">
-        <input type="text" className='tedit' defaultValue={title} onChange = {(e)=> setNewtitle(e.target.value)} ></input>
-        <input type="text" className='cedit' defaultValue={content} onChange = {(e)=> setNewcontent(e.target.value)} ></input>
-            <div className='epro'>
-                      <button className='btn btn-success' onClick={()=>savedit(index,title,content)}>save</button>
-                      <button className='btn btn-secondary'>cancel</button>
+     <div className="pop ">
+        <div className='poptitle'>
+          <input type="text" className='tedit text-warning-emphasis fs-3' id="tedit" ref={titleref} onChange = {(e)=> setNewtitle(e.target.value)} placeholder="Title" autoComplete="off" ></input>
+        </div>
+        <hr />
+        <div className='popcontent'>
+          <textarea className=' fs-5 text-warning-emphasis  pb-2' type='text' ref={contref} placeholder='Content' onChange = {(e)=> setNewcontent(e.target.value)} required style={{border:"none",resize:"none",outline:"none",width:"100%",height:"10rem"}} autoComplete="off" ></textarea>
+        </div>
+            <div className='epro mb-2'>
+                  <button className='btn btn-success' onClick={()=>saveit(id,titleref.current.value,contref.current.value)}>save</button>
+                  <button className='btn ms-3 btn-secondary' onClick={()=>cancel()}>cancel</button>
             </div>
-     </div>
+      </div>
     </div>
     </>
-  
   )
 }

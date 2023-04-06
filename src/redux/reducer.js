@@ -28,21 +28,6 @@ function rootReducer(state = initialState ,action){
             title:action.newtitle,
                     content:action.newcontent
         }
-        // return {
-        //     notes: state.notes.map((n,index) => {
-        //         if(index === action.id) {
-        //              return({
-        //             title:action.newtitle,
-        //             content:action.newcontent
-        //             })
-        //         }else{
-        //             return({
-        //                 title:action.title,
-        //                 content:action.content
-        //             })
-        //         }
-        //     })
-        // }
         return {
             ...state,notes:newarr,
         }

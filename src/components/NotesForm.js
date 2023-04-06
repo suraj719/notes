@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import swal from 'sweetalert';
 // import {  useNavigate } from 'react-router-dom';
 import { addNote } from '../redux/action';
-import AllNotes from './AllNotes';
+// import AllNotes from './AllNotes';
 
 
 export default function NotesForm() {
@@ -21,11 +22,12 @@ export default function NotesForm() {
     setTitle('')
     setContent('')
     // navigate('/allNotes')
+    swal("added a new note","","success")
   }
   return (
     <div className=''>
       <div className='container'>
-          <h1 className="text-center text-warning title mt-5">NOTE KEEPER</h1>
+          <h1 className="text-center text-warning title mt-5">NOTE MAKER</h1>
           <div className='mt-2 text-center'>
             <Link to="/notes">
               <button className='btn btn-outline-info'>
@@ -34,17 +36,16 @@ export default function NotesForm() {
             </Link>
           </div>
           <div className='cntdiv  mt-5'  >
-            <form onSubmit={handleSubmission} autoComplete="off"  >
+            <form onSubmit={handleSubmission} autoComplete="off" className='pt-3' >
                     <div><input className='text-warning-emphasis fs-3 titleinp' type='text' name='title' value={title} placeholder='Title' onChange = {(e)=> setTitle(e.target.value)} required/></div>
                     <hr />
                     <div>
                       {/* <input className='text-warning-emphasis cntinp pb-2' type='text' name='content' value={content} placeholder='Take a note' onChange = {(e)=> setContent(e.target.value)} required/> */}
-                      <textarea className=' fs-5 text-warning-emphasis cntinp pb-2' type='text' name='content' value={content} placeholder='Take a note' onChange = {(e)=> setContent(e.target.value)} required style={{border:"none",width:"100%",height:"15rem",resize:"none",outline:"none"}}></textarea>
+                      <textarea className=' fs-4 text-warning-emphasis cntinp pb-2' type='text' name='content' value={content} placeholder='Take a note' onChange = {(e)=> setContent(e.target.value)} required style={{border:"none",width:"100%",height:"15rem",resize:"none",outline:"none"}}></textarea>
                     </div>
-                    <div className='text-center pb-5'><button className="btn btn-success p-2">Add note</button></div>
+                    <div className='text-center pb-2'><button className="btn btn-success p-2">Add note</button></div>
             </form>
           </div>
-          {/* <AllNotes /> */}
       </div>
     </div>
   )
