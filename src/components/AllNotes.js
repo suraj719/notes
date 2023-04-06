@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
-import swal from 'sweetalert';
+import { ToastContainer, toast } from 'react-toastify';
 import { removeNote, updateNote } from '../redux/action';
 import './notes.css'
 export default function AllNotes() {
@@ -24,7 +24,6 @@ export default function AllNotes() {
   }
   function saveit(id,title,content) {
     dispatch(updateNote(id,title,content,newtitle,newcontent))
-    // alert("done updating");
     document.querySelector('.notes').style.opacity="1"
     document.querySelector('.pop').style.display="none"
   }
@@ -32,9 +31,34 @@ export default function AllNotes() {
     document.querySelector('.notes').style.opacity="1"
     document.querySelector('.pop').style.display="none"
   }
+  function removenote(index) {
+    dispatch(removeNote(index))
+    toast.success('deleted a note', {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      });
+  }
   return (
     <>
     <div className=''>
+    <ToastContainer
+position="top-right"
+autoClose={3000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="dark"
+/>
       <h1 className="text-center text-warning title mt-5">ALL NOTES</h1>
       <div className='text-center'>
        <Link to="/" className=''>
@@ -58,7 +82,7 @@ export default function AllNotes() {
                       </div>
                   </div>
                   <div className='edits'>
-                      <button className="btn btn-danger"  onClick={()=>{ dispatch(removeNote(index));swal("deleted a task","","success")}}>Delete
+                      <button className="btn btn-danger"  onClick={()=>removenote(index)}>Delete
                         <i className="ms-2 fa-solid fa-trash"></i>
                       </button>
                           <button className='btn btn-success' onClick={()=>update(index,note.title,note.content)}>Edit  

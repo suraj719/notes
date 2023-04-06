@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import swal from 'sweetalert';
-// import {  useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { addNote } from '../redux/action';
-// import AllNotes from './AllNotes';
 
 
 export default function NotesForm() {
@@ -13,20 +12,39 @@ export default function NotesForm() {
   let [content, setContent] = useState('')
 
   const dispatch = useDispatch();
-
-  // const navigate = useNavigate();
-
   function handleSubmission(e){
     e.preventDefault();
     dispatch(addNote(title, content))
     setTitle('')
     setContent('')
-    // navigate('/allNotes')
-    swal("added a new note","","success")
+    toast.success('added a new note', {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      });
   }
+  
   return (
     <div className=''>
       <div className='container'>
+      <ToastContainer
+position="top-right"
+autoClose={3000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="dark"
+/>
+
           <h1 className="text-center text-warning title mt-5">NOTE MAKER</h1>
           <div className='mt-2 text-center'>
             <Link to="/notes">
