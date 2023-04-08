@@ -58,7 +58,6 @@ theme="dark"
                     <div><input className='text-warning-emphasis fs-3 titleinp' type='text' name='title' value={title} placeholder='Title' onChange = {(e)=> setTitle(e.target.value)} required/></div>
                     <hr />
                     <div>
-                      {/* <input className='text-warning-emphasis cntinp pb-2' type='text' name='content' value={content} placeholder='Take a note' onChange = {(e)=> setContent(e.target.value)} required/> */}
                       <textarea className=' fs-4 text-warning-emphasis cntinp pb-2' type='text' name='content' value={content} placeholder='Take a note' onChange = {(e)=> setContent(e.target.value)} required style={{border:"none",width:"100%",height:"15rem",resize:"none",outline:"none"}}></textarea>
                     </div>
                     <div className='text-center pb-2'><button className="btn btn-success p-2">Add note</button></div>

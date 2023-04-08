@@ -82,10 +82,10 @@ theme="dark"
                       </div>
                   </div>
                   <div className='edits'>
-                      <button className="btn btn-danger"  onClick={()=>removenote(index)}>Delete
+                      <button className="btn btn-outline-danger"  onClick={()=>removenote(index)}>Delete
                         <i className="ms-2 fa-solid fa-trash"></i>
                       </button>
-                          <button className='btn btn-success' onClick={()=>update(index,note.title,note.content)}>Edit  
+                          <button className='btn btn-outline-success' onClick={()=>update(index,note.title,note.content)}>Edit  
                              <i className="fa-solid ms-2 fa-pen-to-square"></i>
                           </button>
                     </div>
